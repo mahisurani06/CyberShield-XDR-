@@ -1,14 +1,16 @@
 
 
 from fastapi import FastAPI
-from app.models.asset import Asset
+from app.models.asset import Asset 
 from app.database.database import engine
 from app.models.user import User
+from app.models.incident import Incident
 from app.database.database import Base
 from app.routes.auth import router as auth_router
 from app.routes.users import router as users_router
 from app.routes.admin import router as admin_router
 from app.routes.assets import router as assets_router
+from app.routes.incidents import router as incidents_router
 
 
 
@@ -21,6 +23,8 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(admin_router)
 app.include_router(assets_router)
+app.include_router(incidents_router)
+
 
 @app.get("/")
 def root():
