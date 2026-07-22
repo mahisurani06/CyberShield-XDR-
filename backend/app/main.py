@@ -13,6 +13,7 @@ from app.routes.admin import router as admin_router
 from app.routes.assets import router as assets_router
 from app.routes.incidents import router as incidents_router
 from app.routes.alerts import router as alerts_router
+from app.routes.dashboard import router as dashboard_router
 
 
 
@@ -27,6 +28,7 @@ app.include_router(admin_router)
 app.include_router(assets_router)
 app.include_router(incidents_router) 
 app.include_router(alerts_router)
+app.include_router(dashboard_router)
 
 
 @app.get("/")
