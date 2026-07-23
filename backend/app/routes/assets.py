@@ -7,6 +7,8 @@ from app.schemas.asset import AssetCreate, AssetResponse
 from app.auth.oauth2 import get_current_user
 from app.security.roles import analyst_required, admin_required
 
+from app.utils.audit import create_audit_log
+
 router = APIRouter(
     prefix="/assets",
     tags=["Assets"]
@@ -37,12 +39,20 @@ def create_asset(
         owner=asset.owner
     )
 
+    
     db.add(new_asset)
     db.commit()
     db.refresh(new_asset)
 
-    return new_asset
+    create_audit_log(
+    db=db,
+    user_email=current_user.email,
+    action="CREATE",
+    module="Assets",
+    details=f"Created asset {new_asset.hostname}"
+)
 
+    return new_asset
 
 @router.get("/", response_model=list[AssetResponse])
 def get_assets(
