@@ -94,3 +94,45 @@ def alert_severity_summary(
         "medium": medium,
         "low": low
     }
+
+
+@router.get("/incidents/status")
+def incident_status_summary(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    open_count = db.query(Incident).filter(
+        Incident.status == "Open"
+    ).count()
+
+    in_progress = db.query(Incident).filter(
+        Incident.status == "In Progress"
+    ).count()
+
+    resolved = db.query(Incident).filter(
+        Incident.status == "Resolved"
+    ).count()
+
+    return {
+        "open": open_count,
+        "in_progress": in_progress,
+        "resolved": resolved
+    }
+
+@router.get("/assets/status")
+def asset_status_summary(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    online = db.query(Asset).filter(
+        Asset.status == "Online"
+    ).count()
+
+    offline = db.query(Asset).filter(
+        Asset.status == "Offline"
+    ).count()
+
+    return {
+        "online": online,
+        "offline": offline
+    }
