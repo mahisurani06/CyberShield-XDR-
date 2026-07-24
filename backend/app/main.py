@@ -17,6 +17,7 @@ from app.routes.dashboard import router as dashboard_router
 from app.models.audit_log import AuditLog 
 from app.routes.audit_log import router as audit_router
 from app.routes.threat_intel import router as threat_router
+from app.models.threat_lookup import ThreatLookup
 
 
 # Create all database tables
